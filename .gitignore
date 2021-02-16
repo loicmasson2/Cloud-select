@@ -6,21 +6,21 @@
 /cloud-select-front/.pnp.js
 
 # testing
-./cloud-select-front//coverage
+/cloud-select-front//coverage
 
 # production
-./cloud-select-front//build
+/cloud-select-front//build
 
 # misc
-./cloud-select-front/.DS_Store
-./cloud-select-front/.env.local
-./cloud-select-front/.env.development.local
-./cloud-select-front/.env.test.local
-./cloud-select-front/.env.production.local
+/cloud-select-front/.DS_Store
+/cloud-select-front/.env.local
+/cloud-select-front/.env.development.local
+/cloud-select-front/.env.test.local
+/cloud-select-front/.env.production.local
 
-./cloud-select-front/npm-debug.log*
-./cloud-select-front/yarn-debug.log*
-./cloud-select-front/yarn-error.log*
+/cloud-select-front/npm-debug.log*
+/cloud-select-front/yarn-debug.log*
+/cloud-select-front/yarn-error.log*
 
-./cloud-select-back/__pycache__
+/cloud-select-back/__pycache__
 
