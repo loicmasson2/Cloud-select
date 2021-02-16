@@ -1,9 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-./cloud-select-front/node_modules
-./cloud-select-front//.pnp
-./cloud-select-front/.pnp.js
+/cloud-select-front/node_modules
+/cloud-select-front/.pnp
+/cloud-select-front/.pnp.js
 
 # testing
 ./cloud-select-front//coverage
