@@ -1,28 +1,42 @@
 import React from 'react';
 import { Card, Flex, Heading } from 'rebass';
 import axios from 'axios';
+import mapboxgl, { Map } from 'mapbox-gl';
 import './App.css';
-
+mapboxgl.accessToken = 'pk.eyJ1IjoibG9pY21hc3NvbiIsImEiOiJjanI4MXN4MWswMXZhNDNtbHN5dzZzanlsIn0.4fw0ARbOrTr88AHvIEaVyw';
 class MapClouds extends React.Component {
+    private mapContainer: HTMLElement | null | undefined = undefined;
+    private map: Map | undefined;
     state = {
         coordinates: [],
+        lat: 60.158,
+        long: 24.903,
+        zoom: 2,
     };
 
     componentDidMount() {
-        axios.get(`http://127.0.0.1:5000/clouds`).then((res) => {
-            const coordinates = res.data.clouds;
+        // axios.get(`http://127.0.0.1:5000/clouds`).then((res) => {
+        //     const coordinates = res.data.clouds;
 
-            this.setState({ coordinates });
+        //     this.setState({ coordinates });
+        // });
+
+        const map = new mapboxgl.Map({
+            container:
+                this.mapContainer === undefined || this.mapContainer === null
+                    ? '' // or pass in some other HTMLElement which is definitely defined or similar ...
+                    : this.mapContainer,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [this.state.long, this.state.lat],
+            zoom: this.state.zoom,
         });
     }
 
     render() {
         return (
-            <ul>
-                {this.state.coordinates.map((cloud: any) => (
-                    <li>{cloud.cloud_name}</li>
-                ))}
-            </ul>
+            <div>
+                <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
+            </div>
         );
     }
 }
