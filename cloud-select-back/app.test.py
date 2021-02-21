@@ -9,7 +9,7 @@ class BasicTestCase(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get("/clouds", content_type="application/json")
         self.assertEqual(response.status_code, 200)
-        with open("clouds.json") as json_file:
+        with open("test_data/clouds.json") as json_file:
             actual_json = json.dumps(json.loads(response.data), sort_keys=True)
             expected_json = json.dumps(json.load(json_file), sort_keys=True)
             self.assertEqual(expected_json, actual_json)
@@ -18,7 +18,16 @@ class BasicTestCase(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get("/providers", content_type="application/json")
         self.assertEqual(response.status_code, 200)
-        with open("providers.json") as json_file:
+        with open("test_data/providers.json") as json_file:
+            actual_json = json.dumps(json.loads(response.data), sort_keys=True)
+            expected_json = json.dumps(json.load(json_file), sort_keys=True)
+            self.assertEqual(expected_json, actual_json)
+
+    def test_regions(self):
+        tester = app.test_client(self)
+        response = tester.get("/regions", content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        with open("test_data/regions.json") as json_file:
             actual_json = json.dumps(json.loads(response.data), sort_keys=True)
             expected_json = json.dumps(json.load(json_file), sort_keys=True)
             self.assertEqual(expected_json, actual_json)

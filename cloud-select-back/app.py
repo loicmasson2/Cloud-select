@@ -17,7 +17,7 @@ def aiven_clouds():
 @app.route("/providers")
 def aiven_providers():
     providers = []
-    with open("clouds.json") as json_file:
+    with open("test_data/clouds.json") as json_file:
         clouds_json = json.load(json_file)
         for p in clouds_json["clouds"]:
             provider_name = trim_provider_name(p["cloud_name"])
@@ -26,9 +26,22 @@ def aiven_providers():
     return jsonify(providers)
 
 
+@app.route("/regions")
+def aiven_regions():
+    regions = []
+    with open("test_data/clouds.json") as json_file:
+        clouds_json = json.load(json_file)
+        for p in clouds_json["clouds"]:
+            region_name = p["geo_region"]
+            if region_name not in regions:
+                regions.append(region_name)
+    return jsonify(regions)
+
+
 @app.route("/<page_name>")
 def other_page(page_name):
-    response = make_response("The page named %s does not exist." % page_name, 404)
+    response_message = "The page named %s does not exist." % page_name
+    response = make_response(response_message, 404)
     return response
 
 
