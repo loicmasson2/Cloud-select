@@ -26,13 +26,32 @@ def aiven_providers():
 @app.route("/regions")
 def aiven_regions():
     regions = []
-
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     for p in clouds_json["clouds"]:
         region_name = p["geo_region"]
         if region_name not in regions:
             regions.append(region_name)
     return jsonify(regions)
+
+
+@app.route("/clouds/<provider_name>/<region>")
+def aiven_cloud_instances(provider_name, region):
+    result = []
+    clouds_json = get(f"{SITE_NAME}/clouds").json()
+    for p in clouds_json["clouds"]:
+        current_region = p["geo_region"]
+        current_name = trim_provider_name(p["cloud_name"])
+        if region == current_region and provider_name == current_name:
+            result.append(p)
+
+    if len(result) == 0:
+        response_message = "Not found provider %s at the region %s" % (
+            provider_name,
+            region,
+        )
+        response = make_response(response_message, 404)
+        return response
+    return jsonify(result)
 
 
 @app.route("/<page_name>")

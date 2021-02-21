@@ -31,6 +31,21 @@ class AivenTestCases(unittest.TestCase):
             expected_json = json.dumps(json.load(json_file), sort_keys=True)
             self.assertEqual(expected_json, actual_json)
 
+    def test_instances_with_provider_and_region(self):
+        tester = app.test_client(self)
+        response = tester.get(
+            "/clouds/aws/europe", content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(json.loads(response.data)), 6)
+
+    def test_instances_with_provider_and_region_not_found(self):
+        tester = app.test_client(self)
+        response = tester.get(
+            "/clouds/aws/mars", content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_trim_provider_name(self):
         self.assertEqual("aws", trim_provider_name("aws-af-south-1"))
 
