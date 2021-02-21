@@ -69,6 +69,12 @@ def other_page(page_name):
     return response
 
 
+@app.after_request
+def apply_caching(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+
 def trim_provider_name(provider_name):
     return provider_name.split("-")[0]
 
