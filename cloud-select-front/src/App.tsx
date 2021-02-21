@@ -1,19 +1,60 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Card, Flex, Heading } from 'rebass';
+import axios from 'axios';
 import './App.css';
+
+class MapClouds extends React.Component {
+    state = {
+        coordinates: [],
+    };
+
+    componentDidMount() {
+        axios.get(`http://127.0.0.1:5000/clouds`).then((res) => {
+            const coordinates = res.data.clouds;
+
+            this.setState({ coordinates });
+        });
+    }
+
+    render() {
+        return (
+            <ul>
+                {this.state.coordinates.map((cloud: any) => (
+                    <li>{cloud.cloud_name}</li>
+                ))}
+            </ul>
+        );
+    }
+}
 
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
+            <Flex
+                sx={{
+                    color: 'white',
+                    minHeight: '100vh',
+                    backgroundImage: 'linear-gradient(12.96deg, #093EFF 0%, #53FF35 75.96%)',
+                    zIndex: 0,
+                    position: 'relative',
+                }}
+                justifyContent="center"
+            >
+                <Flex alignItems="center" justifyContent="center">
+                    <Card
+                        width={1080}
+                        height={960}
+                        bg="white"
+                        color="black"
+                        sx={{
+                            borderRadius: 20,
+                        }}
+                    >
+                        <Heading mt={4}>CARD</Heading>
+                        <MapClouds></MapClouds>
+                    </Card>
+                </Flex>
+            </Flex>
         </div>
     );
 }
