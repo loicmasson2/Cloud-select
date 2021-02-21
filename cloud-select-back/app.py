@@ -2,8 +2,6 @@ from flask import Flask
 from flask import make_response
 from flask import jsonify
 from requests import get
-import json
-
 
 app = Flask(__name__)
 SITE_NAME = "https://api.aiven.io/v1"
