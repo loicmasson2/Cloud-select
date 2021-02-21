@@ -4,7 +4,7 @@ import json
 from app import app, trim_provider_name
 
 
-class BasicTestCase(unittest.TestCase):
+class AivenTestCases(unittest.TestCase):
     def test_clouds(self):
         tester = app.test_client(self)
         response = tester.get("/clouds", content_type="application/json")
