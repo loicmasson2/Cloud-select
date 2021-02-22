@@ -1,47 +1,80 @@
-import React from 'react';
-import { Card, Flex, Heading } from 'rebass';
+import React, { useState, useEffect } from 'react';
+import { Box, Card, Flex, Heading } from 'rebass';
 import axios from 'axios';
-import mapboxgl, { Map } from 'mapbox-gl';
+import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import './App.css';
-mapboxgl.accessToken = 'pk.eyJ1IjoibG9pY21hc3NvbiIsImEiOiJjanI4MXN4MWswMXZhNDNtbHN5dzZzanlsIn0.4fw0ARbOrTr88AHvIEaVyw';
-class MapClouds extends React.Component {
-    private mapContainer: HTMLElement | null | undefined = undefined;
-    private map: Map | undefined;
-    state = {
-        coordinates: [],
-        lat: 60.158,
-        long: 24.903,
-        zoom: 2,
-    };
+import pin from './pin.png';
 
-    componentDidMount() {
-        // axios.get(`http://127.0.0.1:5000/clouds`).then((res) => {
-        //     const coordinates = res.data.clouds;
+function MapClouds(props: any) {
+    const [viewport, setViewport] = React.useState({
+        longitude: -122.45,
+        latitude: 37.78,
+        zoom: 14,
+    });
+    const [showPopup, togglePopup] = React.useState(false);
 
-        //     this.setState({ coordinates });
-        // });
+    const markers = React.useMemo(
+        () =>
+            props.data.map((city: any) => (
+                <Box>
+                    <Marker
+                        key={city.cloud_name}
+                        longitude={city.geo_longitude}
+                        latitude={city.geo_latitude}
+                        offsetTop={-32}
+                        className="tooltip"
+                    >
+                        <span className="tooltiptext">{city.cloud_name}</span>
+                        <img className={'pin'} src={pin} />
+                    </Marker>
+                </Box>
+            )),
+        [props.data],
+    );
 
-        const map = new mapboxgl.Map({
-            container:
-                this.mapContainer === undefined || this.mapContainer === null
-                    ? '' // or pass in some other HTMLElement which is definitely defined or similar ...
-                    : this.mapContainer,
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [this.state.long, this.state.lat],
-            zoom: this.state.zoom,
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
-            </div>
-        );
-    }
+    return (
+        <Flex alignItems="center" justifyContent="center" height="100%">
+            <ReactMapGL
+                {...viewport}
+                width="80%"
+                height="80%"
+                mapStyle="mapbox://styles/mapbox/light-v10"
+                mapboxApiAccessToken={
+                    'pk.eyJ1IjoibG9pY21hc3NvbiIsImEiOiJjanI4MXN4MWswMXZhNDNtbHN5dzZzanlsIn0.4fw0ARbOrTr88AHvIEaVyw'
+                }
+                onViewportChange={setViewport}
+            >
+                {markers}
+                {showPopup && (
+                    <Popup
+                        latitude={37.78}
+                        longitude={-122.41}
+                        closeButton={true}
+                        closeOnClick={false}
+                        onClose={() => togglePopup(false)}
+                        anchor="top"
+                    >
+                        <div>You are here</div>
+                    </Popup>
+                )}
+            </ReactMapGL>
+        </Flex>
+    );
 }
 
 function App() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        // Create an scoped async function in the hook
+        async function getClouds() {
+            const result = await axios('http://127.0.0.1:5000/clouds');
+
+            setData(result.data.clouds);
+        } // Execute the created function directly
+        getClouds();
+    }, []);
+
     return (
         <div className="App">
             <Flex
@@ -65,7 +98,7 @@ function App() {
                         }}
                     >
                         <Heading mt={4}>CARD</Heading>
-                        <MapClouds></MapClouds>
+                        {data && <MapClouds data={data}></MapClouds>}
                     </Card>
                 </Flex>
             </Flex>
