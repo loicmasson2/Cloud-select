@@ -58,7 +58,7 @@ def aiven_cloud_per_provider(provider_name):
         )
         response = make_response(response_message, 404)
         return response
-    return jsonify(result)
+    return jsonify({"clouds": result})
 
 
 @app.route("/regions/<region_name>")
@@ -76,7 +76,7 @@ def aiven_cloud_per_region(region_name):
         )
         response = make_response(response_message, 404)
         return response
-    return jsonify(result)
+    return jsonify({"clouds": result})
 
 
 @app.route("/clouds/<provider_name>/<region_name>")
@@ -99,14 +99,15 @@ def aiven_cloud_instances(provider_name, region_name):
         )
         response = make_response(response_message, 404)
         return response
-    return jsonify(result)
+    return jsonify({"clouds": result})
 
 
 @app.route("/clouds/closest")
 def aiven_closest():
     v = {"geo_latitude": 60.158, "geo_longitude": 24.903}
     clouds_json = get(f"{SITE_NAME}/clouds").json()
-    return jsonify(closest(clouds_json["clouds"], v))
+    result = closest(clouds_json["clouds"], v)
+    return jsonify({"clouds": result})
 
 
 @app.route("/clear")
