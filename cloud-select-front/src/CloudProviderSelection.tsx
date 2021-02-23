@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Flex, Heading, Text } from 'rebass';
 import axios from 'axios';
+import './CloudProviderSelection.css';
 
 function CloudProviderSelection() {
     const [data, setData] = useState([]);
@@ -23,19 +24,20 @@ function CloudProviderSelection() {
             </Heading>
             <Flex flexWrap={'wrap'} alignItems="center" alignContent="space-between" justifyContent="center">
                 {listProviders.map((provider) => (
-                    <Card
-                        sx={{
-                            boxShadow: 'rgba(0, 0, 0, 0.125) 0px 0px 4px',
-                        }}
-                        width={256}
-                        height={200}
-                        p={2}
-                        m={4}
-                    >
-                        <Flex justifyContent="center" alignItems="center" height={'100%'}>
-                            <Text>{provider}</Text>
-                        </Flex>
-                    </Card>
+                    <div className="card">
+                        <Card
+                            sx={{
+                                boxShadow: 'rgba(0, 0, 0, 0.125) 0px 0px 4px',
+                            }}
+                            width={256}
+                            height={200}
+                            m={4}
+                        >
+                            <Flex justifyContent="center" alignItems="center" height={'100%'}>
+                                <Text>{provider}</Text>
+                            </Flex>
+                        </Card>
+                    </div>
                 ))}
             </Flex>
         </Flex>
