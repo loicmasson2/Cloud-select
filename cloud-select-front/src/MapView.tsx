@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Flex, Heading } from 'rebass';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import ReactMapGL, { Marker } from 'react-map-gl';
-import './App.css';
+import { CoordinatesContext } from './CoordinatesContext';
 import pin from './pin.png';
 
 function MapClouds(props: any) {
@@ -48,27 +47,20 @@ function MapClouds(props: any) {
     );
 }
 
-function App() {
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        async function getClouds() {
-            const result = await axios('http://127.0.0.1:5000/clouds');
-
-            setData(result.data.clouds);
-        }
-        getClouds();
-    }, []);
-
+function MapView() {
     return (
-        <>
-            <Link to="/provider/selection">Filter</Link>
-            <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
-                OUR OFFERING
-            </Heading>
-            {data && <MapClouds data={data}></MapClouds>}
-        </>
+        <CoordinatesContext.Consumer>
+            {({ coordinates }) => (
+                <>
+                    <Link to="/provider/selection">Filter</Link>
+                    <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
+                        OUR OFFERING
+                    </Heading>
+                    {coordinates && <MapClouds data={coordinates}></MapClouds>}
+                </>
+            )}
+        </CoordinatesContext.Consumer>
     );
 }
 
-export default App;
+export default MapView;

@@ -1,33 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 import './index.css';
-import App from './App';
+import { CoordinatesContext } from './CoordinatesContext';
+import MapView from './MapView';
 import CloudProviderSelection from './CloudProviderSelection';
 import Container from './Container';
 import reportWebVitals from './reportWebVitals';
 
-const Routing = () => {
+const App = () => {
+    const [currentCoordinates, setCurrentCoordinates] = useState([]);
+    const [query, setQuery] = useState('/clouds');
+
+    const getParamQuery = (paramQuery: string) => {
+        setQuery(paramQuery);
+    };
+
+    useEffect(() => {
+        async function getClouds() {
+            const result = await axios(`http://127.0.0.1:5000${query}`);
+
+            setCurrentCoordinates(result.data.clouds);
+        }
+        getClouds();
+    }, [query]);
+
     return (
         <Router>
-            <Container>
-                <Switch>
-                    <Route exact path="/" component={App} />
-                    <Route path="/provider/selection" component={CloudProviderSelection} />
-                </Switch>
-            </Container>
+            <CoordinatesContext.Provider value={{ coordinates: currentCoordinates, getParamQuery }}>
+                <Container>
+                    <Switch>
+                        <Route exact path="/" component={MapView} />
+                        <Route path="/provider/selection" component={CloudProviderSelection} />
+                    </Switch>
+                </Container>
+            </CoordinatesContext.Provider>
         </Router>
     );
 };
 
 ReactDOM.render(
     <React.StrictMode>
-        <Routing />
+        <App />
     </React.StrictMode>,
     document.getElementById('root'),
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
