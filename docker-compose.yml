@@ -1,0 +1,28 @@
+services:
+  cloud-select-back:
+    build: cloud-select-back
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./cloud-select-back:/backend
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app.py
+    ports:
+      - "5000:5000"
+
+  cloud-select-front:
+    build: cloud-select-front
+    command: ["npm", "start"]
+    volumes:
+      - ./cloud-select-front:/frontend
+      - node-modules:/frontend/node_modules
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cloud-select-back
+
+volumes:
+  node-modules:
