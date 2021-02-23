@@ -5,17 +5,21 @@ import './CloudProviderSelection.css';
 
 function CloudProviderSelection() {
     const [data, setData] = useState([]);
+    const [query, setQuery] = useState('');
 
     const listProviders = ['AWS', 'GCP', 'AZURE', 'DO', 'UPCLOUD'];
     console.log(listProviders);
     useEffect(() => {
-        async function getClouds() {
-            const result = await axios('http://127.0.0.1:5000/clouds');
+        const fetchData = async () => {
+            if (query !== '') {
+                const result = await axios(`http://127.0.0.1:5000/providers/${query}`);
 
-            setData(result.data.clouds);
-        }
-        getClouds();
-    }, []);
+                setData(result.data);
+            }
+        };
+
+        fetchData();
+    }, [query]);
 
     return (
         <Flex flexDirection="column" alignItems="center" justifyContent="space-evenly" height={'100%'}>
@@ -33,7 +37,14 @@ function CloudProviderSelection() {
                             height={200}
                             m={4}
                         >
-                            <Flex justifyContent="center" alignItems="center" height={'100%'}>
+                            <Flex
+                                justifyContent="center"
+                                alignItems="center"
+                                height={'100%'}
+                                onClick={() => {
+                                    setQuery(provider);
+                                }}
+                            >
                                 <Text>{provider}</Text>
                             </Flex>
                         </Card>
