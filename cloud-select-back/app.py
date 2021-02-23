@@ -1,10 +1,18 @@
 from flask import Flask
 from flask import make_response
 from flask import jsonify
+from flask_caching import Cache
 from requests import get
 from math import cos, asin, sqrt
 
+config = {
+    "DEBUG": True,
+    "CACHE_TYPE": "simple",
+    "CACHE_DEFAULT_TIMEOUT": 300,
+}
 app = Flask(__name__)
+app.config.from_mapping(config)
+cache = Cache(app)
 SITE_NAME = "https://api.aiven.io/v1"
 
 
@@ -60,6 +68,17 @@ def aiven_closest():
     v = {"geo_latitude": 60.158, "geo_longitude": 24.903}
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     return jsonify(closest(clouds_json["clouds"], v))
+
+
+@app.route("/clear")
+def clear():
+    cache.init_app(app, config=config)
+
+    with app.app_context():
+        cache.clear()
+
+    response = make_response("Cache cleared", 200)
+    return response
 
 
 @app.route("/<page_name>")
