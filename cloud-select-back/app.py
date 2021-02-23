@@ -43,14 +43,53 @@ def aiven_regions():
     return jsonify(regions)
 
 
-@app.route("/clouds/<provider_name>/<region>")
-def aiven_cloud_instances(provider_name, region):
+@app.route("/providers/<provider_name>")
+def aiven_cloud_per_provider(provider_name):
+    result = []
+    clouds_json = get(f"{SITE_NAME}/clouds").json()
+    for p in clouds_json["clouds"]:
+        current_name = trim_provider_name(p["cloud_name"])
+        if provider_name.lower() == current_name.lower():
+            result.append(p)
+
+    if len(result) == 0:
+        response_message = "No cloud instances found for provider %s " % (
+            provider_name
+        )
+        response = make_response(response_message, 404)
+        return response
+    return jsonify(result)
+
+
+@app.route("/regions/<region_name>")
+def aiven_cloud_per_region(region_name):
     result = []
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     for p in clouds_json["clouds"]:
         current_region = p["geo_region"]
-        current_name = trim_provider_name(p["cloud_name"])
-        if region == current_region and provider_name == current_name:
+        if region_name.lower() == current_region.lower():
+            result.append(p)
+
+    if len(result) == 0:
+        response_message = "No cloud instances found for region %s " % (
+            provider_name
+        )
+        response = make_response(response_message, 404)
+        return response
+    return jsonify(result)
+
+
+@app.route("/clouds/<provider_name>/<region_name>")
+def aiven_cloud_instances(provider_name, region_name):
+    result = []
+    clouds_json = get(f"{SITE_NAME}/clouds").json()
+    for p in clouds_json["clouds"]:
+        current_region_name = p["geo_region"]
+        current_provider_name = trim_provider_name(p["cloud_name"])
+        if (
+            region_name == current_region_name
+            and current_provider_name == current_name
+        ):
             result.append(p)
 
     if len(result) == 0:
