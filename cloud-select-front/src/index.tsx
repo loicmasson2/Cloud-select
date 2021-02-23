@@ -3,14 +3,19 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import CloudProviderSelection from './CloudProviderSelection';
+import Container from './Container';
 import reportWebVitals from './reportWebVitals';
 
 const Routing = () => {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/" component={App} />
-            </Switch>
+            <Container>
+                <Switch>
+                    <Route exact path="/" component={App} />
+                    <Route path="/provider/selection" component={CloudProviderSelection} />
+                </Switch>
+            </Container>
         </Router>
     );
 };
