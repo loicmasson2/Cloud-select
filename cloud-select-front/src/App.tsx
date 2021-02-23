@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, Flex, Heading } from 'rebass';
+import { Card, Flex, Heading } from 'rebass';
 import axios from 'axios';
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
 import './App.css';
 import pin from './pin.png';
 
 function MapClouds(props: any) {
     const [viewport, setViewport] = React.useState({
-        longitude: -122.45,
-        latitude: 37.78,
-        zoom: 14,
+        longitude: 24.90368,
+        latitude: 60.158771,
+        zoom: 5,
     });
-    const [showPopup, togglePopup] = React.useState(false);
 
     const markers = React.useMemo(
         () =>
             props.data.map((city: any) => (
-                <Box>
-                    <Marker
-                        key={city.cloud_name}
-                        longitude={city.geo_longitude}
-                        latitude={city.geo_latitude}
-                        offsetTop={-32}
-                        className="tooltip"
-                    >
-                        <span className="tooltiptext">{city.cloud_name}</span>
-                        <img className={'pin'} src={pin} />
-                    </Marker>
-                </Box>
+                <Marker
+                    key={city.cloud_name}
+                    longitude={city.geo_longitude}
+                    latitude={city.geo_latitude}
+                    offsetTop={-32}
+                    className="tooltip"
+                >
+                    <span className="tooltiptext">{city.cloud_name}</span>
+                    <img className={'pin'} src={pin} alt="pin" />
+                </Marker>
             )),
         [props.data],
     );
 
     return (
-        <Flex alignItems="center" justifyContent="center" height="100%">
+        <Flex alignItems="center" justifyContent="center" height="90%">
             <ReactMapGL
                 {...viewport}
                 width="80%"
@@ -45,18 +42,6 @@ function MapClouds(props: any) {
                 onViewportChange={setViewport}
             >
                 {markers}
-                {showPopup && (
-                    <Popup
-                        latitude={37.78}
-                        longitude={-122.41}
-                        closeButton={true}
-                        closeOnClick={false}
-                        onClose={() => togglePopup(false)}
-                        anchor="top"
-                    >
-                        <div>You are here</div>
-                    </Popup>
-                )}
             </ReactMapGL>
         </Flex>
     );
@@ -66,12 +51,11 @@ function App() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        // Create an scoped async function in the hook
         async function getClouds() {
             const result = await axios('http://127.0.0.1:5000/clouds');
 
             setData(result.data.clouds);
-        } // Execute the created function directly
+        }
         getClouds();
     }, []);
 
@@ -97,7 +81,9 @@ function App() {
                             borderRadius: 20,
                         }}
                     >
-                        <Heading mt={4}>CARD</Heading>
+                        <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
+                            OUR OFFERING
+                        </Heading>
                         {data && <MapClouds data={data}></MapClouds>}
                     </Card>
                 </Flex>
