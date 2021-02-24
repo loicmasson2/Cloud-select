@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Heading } from 'rebass';
+import { Button, Flex, Heading } from 'rebass';
 import { Link } from 'react-router-dom';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import { CoordinatesContext } from './CoordinatesContext';
@@ -50,7 +50,7 @@ function MapClouds(props: any) {
 function MapView() {
     return (
         <CoordinatesContext.Consumer>
-            {({ coordinates }) => (
+            {({ coordinates, getParamQuery }) => (
                 <>
                     <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
                         OUR OFFERING
@@ -58,6 +58,26 @@ function MapView() {
                     <Flex justifyContent={'space-around'} alignContent="center">
                         <Link to="/filter/provider">Go to provider selection</Link>
                         <Link to="/filter/region">Go to region selection</Link>
+                        <Button
+                            backgroundColor="#53FF35"
+                            fontWeight="400"
+                            color="#093EFF"
+                            onClick={() => {
+                                getParamQuery('/clouds/closest');
+                            }}
+                        >
+                            CLOSEST TO ME
+                        </Button>
+                        <Button
+                            backgroundColor="#53FF35"
+                            fontWeight="400"
+                            color="#093EFF"
+                            onClick={() => {
+                                getParamQuery('/clouds');
+                            }}
+                        >
+                            SEE ALL
+                        </Button>
                     </Flex>
 
                     {coordinates && <MapClouds data={coordinates}></MapClouds>}
