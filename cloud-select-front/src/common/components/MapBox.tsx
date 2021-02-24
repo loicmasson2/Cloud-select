@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Flex } from 'rebass';
 import ReactMapGL, { Marker } from 'react-map-gl';
-import Pin from 'common/components/Pin';
+import Pin from 'common/components/Pin/Pin';
 import Tooltip from 'common/components/Tooltip';
-import './MapBox.css';
 
 type MapBoxProps = {
     data: BackEndCoordinates[];
@@ -27,8 +26,8 @@ const MapBox: FunctionComponent<MapBoxProps> = (props) => {
                     key={cloud.cloud_name}
                     longitude={cloud.geo_longitude}
                     latitude={cloud.geo_latitude}
-                    offsetTop={-32}
-                    className="tooltip"
+                    offsetTop={-32} // to have the arrow down just under the pin
+                    offsetLeft={-16}
                 >
                     <Tooltip>{cloud.cloud_name}</Tooltip>
                     <Pin></Pin>

@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { Card, Flex } from 'rebass';
-import './App.css';
 
 type ContainerProps = {
     children: React.ReactNode;
@@ -16,6 +15,7 @@ const Container: FunctionComponent<ContainerProps> = (props) => {
                     backgroundImage: 'linear-gradient(12.96deg, #093EFF 0%, #53FF35 75.96%)',
                     zIndex: 0,
                     position: 'relative',
+                    textAlign: 'center',
                 }}
                 justifyContent="center"
             >

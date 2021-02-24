@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Flex, Heading } from 'rebass';
 import { Link } from 'react-router-dom';
 import MapBox from 'common/components/MapBox';
-import { CoordinatesContext } from '../common/context/CoordinatesContext';
+import { CoordinatesContext } from 'common/context/CoordinatesContext';
 
 type Coordinates = {
     latitude: number;

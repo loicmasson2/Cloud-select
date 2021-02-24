@@ -6,6 +6,10 @@ type TooltipProps = {
 };
 
 const Tooltip: FunctionComponent<TooltipProps> = (props) => {
-    return <span className="tooltiptext">{props.children}</span>;
+    return (
+        <div className="tooltip">
+            <span className="tooltiptext">{props.children}</span>
+        </div>
+    );
 };
 export default Tooltip;

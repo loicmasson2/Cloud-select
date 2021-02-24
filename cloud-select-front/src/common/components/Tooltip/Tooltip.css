@@ -1,0 +1,21 @@
+.mapboxgl-marker:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    margin-top: -50px;
+    margin-left: -60px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 10;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
