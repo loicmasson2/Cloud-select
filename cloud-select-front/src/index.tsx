@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -11,25 +12,28 @@ import Container from './Container';
 import reportWebVitals from './reportWebVitals';
 
 const App = () => {
-    const [currentCoordinates, setCurrentCoordinates] = useState([]);
+    const [cloudsCoordinates, setCloudsCoordinates] = useState([]);
+
     const [query, setQuery] = useState('/clouds');
 
-    const getParamQuery = (paramQuery: string) => {
+    const getBackendQuery = (paramQuery: string) => {
         setQuery(paramQuery);
     };
 
     useEffect(() => {
         async function getClouds() {
             const result = await axios(`http://127.0.0.1:5000${query}`);
-
-            setCurrentCoordinates(result.data.clouds);
+            console.log('hello');
+            setCloudsCoordinates(result.data.clouds);
         }
         getClouds();
     }, [query]);
 
+    console.log(cloudsCoordinates);
+
     return (
         <Router>
-            <CoordinatesContext.Provider value={{ coordinates: currentCoordinates, getParamQuery }}>
+            <CoordinatesContext.Provider value={{ cloudsCoordinates, getBackendQuery }}>
                 <Container>
                     <Switch>
                         <Route exact path="/" component={MapView} />

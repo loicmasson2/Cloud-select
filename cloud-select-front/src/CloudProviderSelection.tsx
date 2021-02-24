@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Card, Flex, Heading, Text } from 'rebass';
+import { Link, useHistory } from 'react-router-dom';
+import { Button, Card, Flex, Heading, Text } from 'rebass';
 import { CoordinatesContext } from './CoordinatesContext';
 
 import './CloudProviderSelection.css';
 
 function CloudProviderSelection() {
+    const history = useHistory();
     const [providers, setProviders] = useState([]);
 
     useEffect(() => {
@@ -17,9 +18,13 @@ function CloudProviderSelection() {
         getClouds();
     }, []);
 
+    function handleClick() {
+        history.push('/');
+    }
+
     return (
         <CoordinatesContext.Consumer>
-            {({ getParamQuery }) => (
+            {({ getBackendQuery }) => (
                 <>
                     <Flex flexDirection="column" alignItems="center" justifyContent="space-evenly" height={'100%'}>
                         {providers.length !== 0 && (
@@ -48,7 +53,8 @@ function CloudProviderSelection() {
                                                     alignItems="center"
                                                     height={'100%'}
                                                     onClick={() => {
-                                                        getParamQuery(`/providers/${provider}`);
+                                                        getBackendQuery(`/providers/${provider}`);
+                                                        handleClick();
                                                     }}
                                                 >
                                                     <Text>{provider.toUpperCase()}</Text>
@@ -57,7 +63,11 @@ function CloudProviderSelection() {
                                         </div>
                                     ))}
                                 </Flex>
-                                <Link to="/">Home</Link>
+                                <Link to="/">
+                                    <Button backgroundColor="#093EFF" fontWeight="400" color="#53FF35">
+                                        Home
+                                    </Button>
+                                </Link>
                             </>
                         )}
                     </Flex>

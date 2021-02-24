@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Flex, Heading } from 'rebass';
 import { Link } from 'react-router-dom';
 import ReactMapGL, { Marker } from 'react-map-gl';
@@ -11,7 +11,6 @@ function MapClouds(props: any) {
         latitude: 60.158771,
         zoom: 5,
     });
-
     const markers = React.useMemo(
         () =>
             props.data.map((city: any) => (
@@ -47,40 +46,66 @@ function MapClouds(props: any) {
     );
 }
 
+type Coordinates = {
+    latitude: number;
+    longitude: number;
+};
+
 function MapView() {
+    const [myCoordinates, setMyCoordinates] = useState({} as Coordinates);
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            console.log('Latitude is :', position.coords.latitude);
+            console.log('Longitude is :', position.coords.longitude);
+            setMyCoordinates({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            } as Coordinates);
+        });
+    }, []);
+
     return (
         <CoordinatesContext.Consumer>
-            {({ coordinates, getParamQuery }) => (
+            {({ cloudsCoordinates, getBackendQuery }) => (
                 <>
-                    <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
+                    <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} my={4}>
                         OUR OFFERING
                     </Heading>
                     <Flex justifyContent={'space-around'} alignContent="center">
-                        <Link to="/filter/provider">Go to provider selection</Link>
-                        <Link to="/filter/region">Go to region selection</Link>
+                        <Link to="/filter/provider">
+                            <Button backgroundColor="#093EFF" fontWeight="400" color="#53FF35">
+                                Go to provider selection
+                            </Button>
+                        </Link>
+                        <Link to="/filter/region">
+                            <Button backgroundColor="#093EFF" fontWeight="400" color="#53FF35">
+                                Go to region selection
+                            </Button>
+                        </Link>
                         <Button
-                            backgroundColor="#53FF35"
+                            backgroundColor="#093EFF"
                             fontWeight="400"
-                            color="#093EFF"
+                            color="#53FF35"
                             onClick={() => {
-                                getParamQuery('/clouds/closest');
+                                getBackendQuery(`/clouds/closest/${myCoordinates.latitude}/${myCoordinates.longitude}`);
                             }}
                         >
                             CLOSEST TO ME
                         </Button>
                         <Button
-                            backgroundColor="#53FF35"
+                            backgroundColor="#093EFF"
                             fontWeight="400"
-                            color="#093EFF"
+                            color="#53FF35"
                             onClick={() => {
-                                getParamQuery('/clouds');
+                                getBackendQuery('/clouds');
                             }}
                         >
                             SEE ALL
                         </Button>
                     </Flex>
 
-                    {coordinates && <MapClouds data={coordinates}></MapClouds>}
+                    {cloudsCoordinates && <MapClouds data={cloudsCoordinates}></MapClouds>}
                 </>
             )}
         </CoordinatesContext.Consumer>
