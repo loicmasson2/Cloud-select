@@ -6,26 +6,25 @@ import { CoordinatesContext } from './CoordinatesContext';
 
 import './CloudProviderSelection.css';
 
-function CloudProviderSelection() {
-    const [providers, setProviders] = useState([]);
+function RegionSelection() {
+    const [regions, setRegions] = useState([]);
 
     useEffect(() => {
         async function getClouds() {
-            const result = await axios(`http://127.0.0.1:5000/providers`);
-            setProviders(result.data);
+            const result = await axios(`http://127.0.0.1:5000/regions`);
+            setRegions(result.data);
         }
         getClouds();
     }, []);
-
     return (
         <CoordinatesContext.Consumer>
             {({ getParamQuery }) => (
                 <>
                     <Flex flexDirection="column" alignItems="center" justifyContent="space-evenly" height={'100%'}>
-                        {providers.length !== 0 && (
+                        {regions.length !== 0 && (
                             <>
                                 <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
-                                    Which cloud service?
+                                    Which region?
                                 </Heading>
                                 <Flex
                                     flexWrap={'wrap'}
@@ -33,7 +32,7 @@ function CloudProviderSelection() {
                                     alignContent="space-between"
                                     justifyContent="center"
                                 >
-                                    {providers.map((provider: string) => (
+                                    {regions.map((provider: string) => (
                                         <div key={provider} className="card">
                                             <Card
                                                 sx={{
@@ -48,7 +47,7 @@ function CloudProviderSelection() {
                                                     alignItems="center"
                                                     height={'100%'}
                                                     onClick={() => {
-                                                        getParamQuery(`/providers/${provider}`);
+                                                        getParamQuery(`/regions/${provider}`);
                                                     }}
                                                 >
                                                     <Text>{provider.toUpperCase()}</Text>
@@ -67,4 +66,4 @@ function CloudProviderSelection() {
     );
 }
 
-export default CloudProviderSelection;
+export default RegionSelection;

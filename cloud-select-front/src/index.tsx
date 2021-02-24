@@ -6,6 +6,7 @@ import './index.css';
 import { CoordinatesContext } from './CoordinatesContext';
 import MapView from './MapView';
 import CloudProviderSelection from './CloudProviderSelection';
+import RegionSelection from './RegionSelection';
 import Container from './Container';
 import reportWebVitals from './reportWebVitals';
 
@@ -32,7 +33,8 @@ const App = () => {
                 <Container>
                     <Switch>
                         <Route exact path="/" component={MapView} />
-                        <Route path="/provider/selection" component={CloudProviderSelection} />
+                        <Route path="/filter/provider" component={CloudProviderSelection} />
+                        <Route path="/filter/region" component={RegionSelection} />
                     </Switch>
                 </Container>
             </CoordinatesContext.Provider>

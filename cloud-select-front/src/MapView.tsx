@@ -52,10 +52,14 @@ function MapView() {
         <CoordinatesContext.Consumer>
             {({ coordinates }) => (
                 <>
-                    <Link to="/provider/selection">Filter</Link>
                     <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
                         OUR OFFERING
                     </Heading>
+                    <Flex justifyContent={'space-around'} alignContent="center">
+                        <Link to="/filter/provider">Go to provider selection</Link>
+                        <Link to="/filter/region">Go to region selection</Link>
+                    </Flex>
+
                     {coordinates && <MapClouds data={coordinates}></MapClouds>}
                 </>
             )}
