@@ -38,11 +38,11 @@ const MapBox: FunctionComponent<MapBoxProps> = (props) => {
     );
 
     return (
-        <Flex alignItems="center" justifyContent="center" height="90%">
+        <Flex alignItems="center" justifyContent="center" height="80%">
             <ReactMapGL
                 {...viewport}
-                width="80%"
-                height="80%"
+                width="90%"
+                height="90%"
                 mapStyle="mapbox://styles/mapbox/light-v10"
                 mapboxApiAccessToken={
                     'pk.eyJ1IjoibG9pY21hc3NvbiIsImEiOiJjanI4MXN4MWswMXZhNDNtbHN5dzZzanlsIn0.4fw0ARbOrTr88AHvIEaVyw'
