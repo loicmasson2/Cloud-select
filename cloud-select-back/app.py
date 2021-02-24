@@ -107,7 +107,7 @@ def aiven_closest():
     v = {"geo_latitude": 60.158, "geo_longitude": 24.903}
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     result = closest(clouds_json["clouds"], v)
-    return jsonify({"clouds": result})
+    return jsonify({"clouds": [result]})
 
 
 @app.route("/clear")
