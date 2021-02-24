@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, Card, Flex, Heading, Text } from 'rebass';
-import { CoordinatesContext } from './CoordinatesContext';
+import { CoordinatesContext } from './common/context/CoordinatesContext';
 
 import './CloudProviderSelection.css';
 
@@ -24,7 +24,7 @@ function RegionSelection() {
     }
     return (
         <CoordinatesContext.Consumer>
-            {({ getBackendQuery }) => (
+            {({ setBackendQuery }) => (
                 <>
                     <Flex flexDirection="column" alignItems="center" justifyContent="space-evenly" height={'100%'}>
                         {regions.length !== 0 && (
@@ -53,7 +53,7 @@ function RegionSelection() {
                                                     alignItems="center"
                                                     height={'100%'}
                                                     onClick={() => {
-                                                        getBackendQuery(`/regions/${provider}`);
+                                                        setBackendQuery(`/regions/${provider}`);
                                                         handleClick();
                                                     }}
                                                 >

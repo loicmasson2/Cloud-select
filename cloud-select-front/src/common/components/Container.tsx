@@ -8,7 +8,7 @@ type ContainerProps = {
 
 const Container: FunctionComponent<ContainerProps> = (props) => {
     return (
-        <div className="App">
+        <div className="container">
             <Flex
                 sx={{
                     color: 'white',

@@ -1,50 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Flex, Heading } from 'rebass';
 import { Link } from 'react-router-dom';
-import ReactMapGL, { Marker } from 'react-map-gl';
-import { CoordinatesContext } from './CoordinatesContext';
-import pin from './pin.png';
-
-function MapClouds(props: any) {
-    const [viewport, setViewport] = React.useState({
-        longitude: 24.90368,
-        latitude: 60.158771,
-        zoom: 5,
-    });
-    const markers = React.useMemo(
-        () =>
-            props.data.map((city: any) => (
-                <Marker
-                    key={city.cloud_name}
-                    longitude={city.geo_longitude}
-                    latitude={city.geo_latitude}
-                    offsetTop={-32}
-                    className="tooltip"
-                >
-                    <span className="tooltiptext">{city.cloud_name}</span>
-                    <img className={'pin'} src={pin} alt="pin" />
-                </Marker>
-            )),
-        [props.data],
-    );
-
-    return (
-        <Flex alignItems="center" justifyContent="center" height="90%">
-            <ReactMapGL
-                {...viewport}
-                width="80%"
-                height="80%"
-                mapStyle="mapbox://styles/mapbox/light-v10"
-                mapboxApiAccessToken={
-                    'pk.eyJ1IjoibG9pY21hc3NvbiIsImEiOiJjanI4MXN4MWswMXZhNDNtbHN5dzZzanlsIn0.4fw0ARbOrTr88AHvIEaVyw'
-                }
-                onViewportChange={setViewport}
-            >
-                {markers}
-            </ReactMapGL>
-        </Flex>
-    );
-}
+import MapBox from 'common/components/MapBox';
+import { CoordinatesContext } from '../common/context/CoordinatesContext';
 
 type Coordinates = {
     latitude: number;
@@ -56,8 +14,6 @@ function MapView() {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function (position) {
-            console.log('Latitude is :', position.coords.latitude);
-            console.log('Longitude is :', position.coords.longitude);
             setMyCoordinates({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
@@ -67,7 +23,7 @@ function MapView() {
 
     return (
         <CoordinatesContext.Consumer>
-            {({ cloudsCoordinates, getBackendQuery }) => (
+            {({ cloudsCoordinates, setBackendQuery }) => (
                 <>
                     <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} my={4}>
                         OUR OFFERING
@@ -88,7 +44,7 @@ function MapView() {
                             fontWeight="400"
                             color="#53FF35"
                             onClick={() => {
-                                getBackendQuery(`/clouds/closest/${myCoordinates.latitude}/${myCoordinates.longitude}`);
+                                setBackendQuery(`/clouds/closest/${myCoordinates.latitude}/${myCoordinates.longitude}`);
                             }}
                         >
                             CLOSEST TO ME
@@ -98,14 +54,14 @@ function MapView() {
                             fontWeight="400"
                             color="#53FF35"
                             onClick={() => {
-                                getBackendQuery('/clouds');
+                                setBackendQuery('/clouds');
                             }}
                         >
                             SEE ALL
                         </Button>
                     </Flex>
 
-                    {cloudsCoordinates && <MapClouds data={cloudsCoordinates}></MapClouds>}
+                    {cloudsCoordinates && <MapBox data={cloudsCoordinates}></MapBox>}
                 </>
             )}
         </CoordinatesContext.Consumer>

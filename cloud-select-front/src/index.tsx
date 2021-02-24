@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
-import { CoordinatesContext } from './CoordinatesContext';
-import MapView from './MapView';
+import { CoordinatesContext } from './common/context/CoordinatesContext';
+import MapView from './home/MapView';
 import CloudProviderSelection from './CloudProviderSelection';
 import RegionSelection from './RegionSelection';
-import Container from './Container';
+import Container from './common/components/Container';
 import reportWebVitals from './reportWebVitals';
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
 
     const [query, setQuery] = useState('/clouds');
 
-    const getBackendQuery = (paramQuery: string) => {
+    const setBackendQuery = (paramQuery: string) => {
         setQuery(paramQuery);
     };
 
@@ -33,7 +33,7 @@ const App = () => {
 
     return (
         <Router>
-            <CoordinatesContext.Provider value={{ cloudsCoordinates, getBackendQuery }}>
+            <CoordinatesContext.Provider value={{ cloudsCoordinates, setBackendQuery }}>
                 <Container>
                     <Switch>
                         <Route exact path="/" component={MapView} />
