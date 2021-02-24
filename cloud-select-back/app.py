@@ -102,9 +102,9 @@ def aiven_cloud_instances(provider_name, region_name):
     return jsonify({"clouds": result})
 
 
-@app.route("/clouds/closest")
-def aiven_closest():
-    v = {"geo_latitude": 60.158, "geo_longitude": 24.903}
+@app.route("/clouds/closest/<latitude>/<longitude>")
+def aiven_closest(latitude, longitude):
+    v = {"geo_latitude": float(latitude), "geo_longitude": float(longitude)}
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     result = closest(clouds_json["clouds"], v)
     return jsonify({"clouds": [result]})
@@ -139,11 +139,6 @@ def trim_provider_name(provider_name):
 
 
 def distance(lat1, lon1, lat2, lon2):
-    print(lat1)
-    print(lon1)
-    print(lat2)
-    print(lon2)
-
     p = 0.017453292519943295
     a = (
         0.5
