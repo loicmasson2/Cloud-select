@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { Flex, Heading, Text } from 'rebass';
+import { Flex, Text } from 'rebass';
 import LinkButton from 'common/components/LinkButton';
 import H1 from 'common/components/H1';
 import FilterCard from 'common/components/FilterCard';
-import { CoordinatesContext } from './common/context/CoordinatesContext';
+import { CoordinatesContext } from '../common/context/CoordinatesContext';
 
 function CloudProviderSelection() {
     const history = useHistory();

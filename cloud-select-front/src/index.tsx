@@ -6,8 +6,8 @@ import axios from 'axios';
 import './index.css';
 import { CoordinatesContext } from './common/context/CoordinatesContext';
 import MapView from './home/MapView';
-import CloudProviderSelection from './CloudProviderSelection';
-import RegionSelection from './RegionSelection';
+import CloudProviderSelection from './selection/CloudProviderSelection';
+import RegionSelection from './selection/CloudRegionSelection';
 import Container from './common/components/Container';
 import reportWebVitals from './reportWebVitals';
 
