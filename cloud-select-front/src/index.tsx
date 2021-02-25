@@ -23,13 +23,10 @@ const App = () => {
     useEffect(() => {
         async function getClouds() {
             const result = await axios(`http://127.0.0.1:5000${query}`);
-            console.log('hello');
             setCloudsCoordinates(result.data.clouds);
         }
         getClouds();
     }, [query]);
-
-    console.log(cloudsCoordinates);
 
     return (
         <Router>

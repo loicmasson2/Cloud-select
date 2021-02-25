@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Flex, Heading } from 'rebass';
-import { Link } from 'react-router-dom';
 import MapBox from 'common/components/MapBox';
+import PrimaryButton from 'common/components/PrimaryButton';
+import LinkButton from 'common/components/LinkButton';
 import { CoordinatesContext } from 'common/context/CoordinatesContext';
 
 type Coordinates = {
@@ -9,17 +10,28 @@ type Coordinates = {
     longitude: number;
 };
 
+const options = {
+    enableHighAccuracy: false,
+    timeout: 5000,
+    maximumAge: 6000, // desktop usage so not likely to move around
+};
 function MapView() {
     const [myCoordinates, setMyCoordinates] = useState({} as Coordinates);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            setMyCoordinates({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-            } as Coordinates);
-        });
-    }, []);
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setMyCoordinates({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                } as Coordinates);
+            },
+            (error) => {
+                console.error(error);
+            },
+            options,
+        );
+    }, [myCoordinates]);
 
     return (
         <CoordinatesContext.Consumer>
@@ -29,36 +41,26 @@ function MapView() {
                         OUR OFFERING
                     </Heading>
                     <Flex justifyContent={'space-around'} alignContent="center">
-                        <Link to="/filter/provider">
-                            <Button backgroundColor="#093EFF" fontWeight="400" color="#53FF35">
-                                Go to provider selection
-                            </Button>
-                        </Link>
-                        <Link to="/filter/region">
-                            <Button backgroundColor="#093EFF" fontWeight="400" color="#53FF35">
-                                Go to region selection
-                            </Button>
-                        </Link>
-                        <Button
-                            backgroundColor="#093EFF"
-                            fontWeight="400"
-                            color="#53FF35"
-                            onClick={() => {
-                                setBackendQuery(`/clouds/closest/${myCoordinates.latitude}/${myCoordinates.longitude}`);
-                            }}
-                        >
-                            CLOSEST TO ME
-                        </Button>
-                        <Button
-                            backgroundColor="#093EFF"
-                            fontWeight="400"
-                            color="#53FF35"
+                        <LinkButton to="/filter/provider">Go to provider selection</LinkButton>
+                        <LinkButton to="/filter/region">Go to region selection</LinkButton>
+                        {myCoordinates.latitude && myCoordinates.longitude && (
+                            <PrimaryButton
+                                onClick={() => {
+                                    setBackendQuery(
+                                        `/clouds/closest/${myCoordinates.latitude}/${myCoordinates.longitude}`,
+                                    );
+                                }}
+                            >
+                                Closest to me
+                            </PrimaryButton>
+                        )}
+                        <PrimaryButton
                             onClick={() => {
                                 setBackendQuery('/clouds');
                             }}
                         >
-                            SEE ALL
-                        </Button>
+                            Remove filters
+                        </PrimaryButton>
                     </Flex>
 
                     {cloudsCoordinates && <MapBox data={cloudsCoordinates}></MapBox>}
