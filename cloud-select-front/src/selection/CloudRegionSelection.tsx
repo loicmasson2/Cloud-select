@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Flex, Text } from 'rebass';
+
+import API from 'common/api/api';
 import LinkButton from 'common/components/LinkButton';
 import H1 from 'common/components/H1';
 import FilterCard from 'common/components/FilterCard';
@@ -15,7 +16,7 @@ function CloudRegionSelection() {
 
     useEffect(() => {
         async function getClouds() {
-            const result = await axios(`http://127.0.0.1:5000/regions`);
+            const result = await API(`/regions`);
             setRegions(result.data);
         }
         getClouds();

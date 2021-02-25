@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
+
+import API from 'common/api/api';
+import CloudProviderSelection from 'selection/CloudProviderSelection';
+import RegionSelection from 'selection/CloudRegionSelection';
+import Container from 'common/components/Container';
+import { CoordinatesContext } from 'common/context/CoordinatesContext';
+import MapView from 'home/MapView';
+import reportWebVitals from 'reportWebVitals';
+
 import './index.css';
-import { CoordinatesContext } from './common/context/CoordinatesContext';
-import MapView from './home/MapView';
-import CloudProviderSelection from './selection/CloudProviderSelection';
-import RegionSelection from './selection/CloudRegionSelection';
-import Container from './common/components/Container';
-import reportWebVitals from './reportWebVitals';
 
 const App = () => {
     const [cloudsCoordinates, setCloudsCoordinates] = useState([]);
@@ -22,7 +24,7 @@ const App = () => {
 
     useEffect(() => {
         async function getClouds() {
-            const result = await axios(`http://127.0.0.1:5000${query}`);
+            const result = await API(`${query}`);
             setCloudsCoordinates(result.data.clouds);
         }
         getClouds();

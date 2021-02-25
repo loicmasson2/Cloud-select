@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Flex, Heading } from 'rebass';
+import { Flex } from 'rebass';
 import MapBox from 'common/components/MapBox';
 import PrimaryButton from 'common/components/PrimaryButton';
 import LinkButton from 'common/components/LinkButton';
+import H1 from 'common/components/H1';
 import { CoordinatesContext } from 'common/context/CoordinatesContext';
 
 type Coordinates = {
@@ -37,9 +38,7 @@ function MapView() {
         <CoordinatesContext.Consumer>
             {({ cloudsCoordinates, setBackendQuery }) => (
                 <>
-                    <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} my={4}>
-                        OUR OFFERING
-                    </Heading>
+                    <H1>Our offering</H1>
                     <Flex justifyContent={'space-around'} alignContent="center">
                         <LinkButton to="/filter/provider">Go to provider selection</LinkButton>
                         <LinkButton to="/filter/region">Go to region selection</LinkButton>
