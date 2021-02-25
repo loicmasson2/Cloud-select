@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import MyPrimaryButton from 'common/components/PrimaryButton';
 
 type LinkButtonProps = {
@@ -7,10 +7,17 @@ type LinkButtonProps = {
     to: string;
 };
 const LinkButton: FunctionComponent<LinkButtonProps> = (props) => {
+    const history = useHistory();
+
     return (
-        <Link to={props.to}>
-            <MyPrimaryButton {...props}>{props.children}</MyPrimaryButton>
-        </Link>
+        <MyPrimaryButton
+            onClick={() => {
+                history.push(props.to);
+            }}
+            {...props}
+        >
+            {props.children}
+        </MyPrimaryButton>
     );
 };
 

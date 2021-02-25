@@ -9,7 +9,7 @@ import FilterCard from 'common/components/FilterCard';
 
 import { CoordinatesContext } from '../common/context/CoordinatesContext';
 
-function CloudRegionSelection() {
+const CloudRegionSelection = () => {
     const history = useHistory();
 
     const [regions, setRegions] = useState([]);
@@ -63,6 +63,6 @@ function CloudRegionSelection() {
             )}
         </CoordinatesContext.Consumer>
     );
-}
+};
 
 export default CloudRegionSelection;

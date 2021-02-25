@@ -8,7 +8,7 @@ import H1 from 'common/components/H1';
 import FilterCard from 'common/components/FilterCard';
 import { CoordinatesContext } from 'common/context/CoordinatesContext';
 
-function CloudProviderSelection() {
+const CloudProviderSelection = () => {
     const history = useHistory();
     const [providers, setProviders] = useState([]);
 
@@ -62,6 +62,6 @@ function CloudProviderSelection() {
             )}
         </CoordinatesContext.Consumer>
     );
-}
+};
 
 export default CloudProviderSelection;
