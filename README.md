@@ -38,6 +38,23 @@ See the folder wireframes.
 I got inspiration from https://medium.muz.li/select-page-ui-inspiration-6d162da12982.
 I used the complementary colors from https://aiven.io/ homepage.
 
+## Roadmap
+
+### Front end
+
+- being able to select both a provider and a region as a filter
+- get several results from get closest endpoint
+- different colors for different provider on the map
+- error handling when the api is not returning any results
+- error handling when the api is not working
+- being able to select several providers or several regions when filtering
+- add cypress for End to End
+- add react-styleguidist
+
+### Backend
+
+-
+
 ## Attributions
 
 UI selection
