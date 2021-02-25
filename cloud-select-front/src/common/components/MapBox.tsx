@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Flex } from 'rebass';
 import ReactMapGL, { Marker } from 'react-map-gl';
-import Pin from 'common/components/Pin/Pin';
+import Pin from 'common/components/Pin';
 import Tooltip from 'common/components/Tooltip';
 
 type MapBoxProps = {

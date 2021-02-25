@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
-import { Button, Card, Flex, Heading, Text } from 'rebass';
+import { useHistory } from 'react-router-dom';
+import { Flex, Heading, Text } from 'rebass';
+import LinkButton from 'common/components/LinkButton';
+import H1 from 'common/components/H1';
+import FilterCard from 'common/components/FilterCard';
 import { CoordinatesContext } from './common/context/CoordinatesContext';
-
-import './CloudProviderSelection.css';
 
 function CloudProviderSelection() {
     const history = useHistory();
@@ -16,7 +17,7 @@ function CloudProviderSelection() {
             setProviders(result.data);
         }
         getClouds();
-    }, []);
+    }, [history]);
 
     function handleClick() {
         history.push('/');
@@ -29,9 +30,7 @@ function CloudProviderSelection() {
                     <Flex flexDirection="column" alignItems="center" justifyContent="space-evenly" height={'100%'}>
                         {providers.length !== 0 && (
                             <>
-                                <Heading fontFamily={'Ubuntu'} as={'h1'} fontSize={7} mt={4}>
-                                    Which cloud service?
-                                </Heading>
+                                <H1>Which cloud service?</H1>
                                 <Flex
                                     flexWrap={'wrap'}
                                     alignItems="center"
@@ -39,35 +38,22 @@ function CloudProviderSelection() {
                                     justifyContent="center"
                                 >
                                     {providers.map((provider: string) => (
-                                        <div key={provider} className="card">
-                                            <Card
-                                                sx={{
-                                                    boxShadow: 'rgba(0, 0, 0, 0.125) 0px 0px 4px',
+                                        <FilterCard key={provider}>
+                                            <Flex
+                                                justifyContent="center"
+                                                alignItems="center"
+                                                height={'100%'}
+                                                onClick={() => {
+                                                    setBackendQuery(`/providers/${provider}`);
+                                                    handleClick();
                                                 }}
-                                                width={256}
-                                                height={200}
-                                                m={4}
                                             >
-                                                <Flex
-                                                    justifyContent="center"
-                                                    alignItems="center"
-                                                    height={'100%'}
-                                                    onClick={() => {
-                                                        setBackendQuery(`/providers/${provider}`);
-                                                        handleClick();
-                                                    }}
-                                                >
-                                                    <Text>{provider.toUpperCase()}</Text>
-                                                </Flex>
-                                            </Card>
-                                        </div>
+                                                <Text>{provider.toUpperCase()}</Text>
+                                            </Flex>
+                                        </FilterCard>
                                     ))}
                                 </Flex>
-                                <Link to="/">
-                                    <Button backgroundColor="#093EFF" fontWeight="400" color="#53FF35">
-                                        Home
-                                    </Button>
-                                </Link>
+                                <LinkButton to="/">Home</LinkButton>
                             </>
                         )}
                     </Flex>

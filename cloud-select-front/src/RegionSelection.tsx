@@ -4,8 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button, Card, Flex, Heading, Text } from 'rebass';
 import { CoordinatesContext } from './common/context/CoordinatesContext';
 
-import './CloudProviderSelection.css';
-
 function RegionSelection() {
     const history = useHistory();
 
