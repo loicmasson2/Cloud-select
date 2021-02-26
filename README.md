@@ -48,6 +48,11 @@ I used the complementary colors from https://aiven.io/ homepage.
 - error handling when the api is not returning any results
 - error handling when the api is not working
 - being able to select several providers or several regions when filtering
+- display which filters are currently applied
+- no github actions for frontend but would be quite similar to the back end one, for formatting, linting and test
+- could be made responsive
+- axios interceptors to change from snake case to camelCase
+- couldn't manage to test moving from one page to another
 - add cypress for End to End
 - add react-styleguidist
 
@@ -63,6 +68,9 @@ https://medium.muz.li/select-page-ui-inspiration-6d162da12982
 Lat long python
 https://stackoverflow.com/questions/41336756/find-the-closest-latitude-and-longitude/41337005
 https://en.wikipedia.org/wiki/Haversine_formula
+
+Python dict
+https://stackoverflow.com/questions/10995172/python-check-if-list-of-keys-exist-in-dictionary
 
 Tooltip
 https://www.w3schools.com/css/css_tooltip.asp
@@ -85,6 +93,15 @@ React and TS
 https://create-react-app.dev/docs/adding-typescript/
 https://www.robertcooper.me/using-eslint-and-prettier-in-a-typescript-project
 https://js.plainenglish.io/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
+https://www.robinwieruch.de/react-hooks-fetch-data
+
+React testing
+https://stackoverflow.com/questions/51495473/typescript-and-jest-avoiding-type-errors-on-mocked-functions
+https://blog.logrocket.com/testing-the-react-router-usehistory-hook-with-react-testing-library/
+
+React Router
+https://medium.com/how-to-react/how-to-use-react-router-in-your-react-js-project-7e1d469a9716
+https://stackoverflow.com/questions/50155909/how-to-use-context-api-with-react-router-v4
 
 Rebass doc
 https://rebassjs.org/

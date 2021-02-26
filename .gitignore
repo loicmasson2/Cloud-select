@@ -23,6 +23,6 @@
 /cloud-select-front/yarn-error.log*
 
 /cloud-select-back/__pycache__
-/cloud-select-back/tests/__pycache__
+/cloud-select-back/tests/__pycache__/*
 
 
