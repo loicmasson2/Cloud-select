@@ -47,6 +47,29 @@ class AivenTestCases(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
+    def test_instance_with_latitude_and_longitude(self):
+        tester = app.test_client(self)
+        response = tester.get(
+            "/clouds/closest/60/40", content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        actual_json = json.loads(response.data)
+        self.assertEqual(len(actual_json["clouds"]), 1)
+
+    def test_instance_with_latitude_and_missing_longitude(self):
+        tester = app.test_client(self)
+        response = tester.get(
+            "/clouds/closest/60", content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_instance_with_latitude_and_longitude_wrong_type(self):
+        tester = app.test_client(self)
+        response = tester.get(
+            "/clouds/closest/hello/mars", content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 500)
+
     def test_trim_provider_name(self):
         self.assertEqual("aws", trim_provider_name("aws-af-south-1"))
 
@@ -55,6 +78,9 @@ class AivenTestCases(unittest.TestCase):
         response = tester.get("a", content_type="html/text")
         self.assertEqual(response.status_code, 404)
         self.assertTrue(b"does not exist" in response.data)
+
+
+# test get clouds withotu comparing blindly json
 
 
 if __name__ == "__main__":

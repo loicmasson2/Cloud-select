@@ -104,6 +104,15 @@ def aiven_clouds_instances(provider_name, region_name):
 
 @app.route("/clouds/closest/<latitude>/<longitude>")
 def aiven_closest(latitude, longitude):
+    try:
+        float(latitude)
+        float(longitude)
+    except ValueError:
+        response = make_response(
+            "Parameters cannot be converted to numbers", 500
+        )
+        return response
+
     v = {"geo_latitude": float(latitude), "geo_longitude": float(longitude)}
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     result = closest(clouds_json["clouds"], v)
