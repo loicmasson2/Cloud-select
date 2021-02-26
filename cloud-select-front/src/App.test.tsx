@@ -1,8 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import API from 'common/api/api';
 import MapView from 'home/MapView';

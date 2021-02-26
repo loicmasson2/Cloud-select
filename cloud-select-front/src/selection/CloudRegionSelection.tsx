@@ -6,8 +6,7 @@ import API from 'common/api/api';
 import LinkButton from 'common/components/LinkButton';
 import H1 from 'common/components/H1';
 import FilterCard from 'common/components/FilterCard';
-
-import { CoordinatesContext } from '../common/context/CoordinatesContext';
+import { CoordinatesContext } from 'common/context/CoordinatesContext';
 
 const CloudRegionSelection = () => {
     const history = useHistory();
