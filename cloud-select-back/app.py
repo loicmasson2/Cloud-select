@@ -44,7 +44,7 @@ def aiven_regions():
 
 
 @app.route("/providers/<provider_name>")
-def aiven_cloud_per_provider(provider_name):
+def aiven_clouds_per_provider(provider_name):
     result = []
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     for p in clouds_json["clouds"]:
@@ -62,7 +62,7 @@ def aiven_cloud_per_provider(provider_name):
 
 
 @app.route("/regions/<region_name>")
-def aiven_cloud_per_region(region_name):
+def aiven_clouds_per_region(region_name):
     result = []
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     for p in clouds_json["clouds"]:
@@ -80,7 +80,7 @@ def aiven_cloud_per_region(region_name):
 
 
 @app.route("/clouds/<provider_name>/<region_name>")
-def aiven_cloud_instances(provider_name, region_name):
+def aiven_clouds_instances(provider_name, region_name):
     result = []
     clouds_json = get(f"{SITE_NAME}/clouds").json()
     for p in clouds_json["clouds"]:
@@ -88,14 +88,14 @@ def aiven_cloud_instances(provider_name, region_name):
         current_provider_name = trim_provider_name(p["cloud_name"])
         if (
             region_name == current_region_name
-            and current_provider_name == current_name
+            and provider_name == current_provider_name
         ):
             result.append(p)
 
     if len(result) == 0:
         response_message = "Not found provider %s at the region %s" % (
             provider_name,
-            region,
+            region_name,
         )
         response = make_response(response_message, 404)
         return response

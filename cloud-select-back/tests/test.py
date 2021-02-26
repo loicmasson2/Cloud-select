@@ -37,7 +37,8 @@ class AivenTestCases(unittest.TestCase):
             "/clouds/aws/europe", content_type="application/json"
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(json.loads(response.data)), 6)
+        actual_json = json.loads(response.data)
+        self.assertEqual(len(actual_json["clouds"]), 6)
 
     def test_instances_with_provider_and_region_not_found(self):
         tester = app.test_client(self)
