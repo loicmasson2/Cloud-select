@@ -13,6 +13,23 @@ class AivenTestCases(unittest.TestCase):
             expected_json = json.dumps(json.load(json_file), sort_keys=True)
             self.assertEqual(expected_json, actual_json)
 
+    def test_cloud(self):
+        tester = app.test_client(self)
+        response = tester.get("/clouds", content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        result = json.loads(response.data)
+        fields = (
+            "cloud_description",
+            "cloud_name",
+            "geo_latitude",
+            "geo_longitude",
+            "geo_region",
+        )
+        hasAllProperties = all(
+            properties in result["clouds"][0] for properties in fields
+        )
+        self.assertEqual(hasAllProperties, True)
+
     def test_providers(self):
         tester = app.test_client(self)
         response = tester.get("/providers", content_type="application/json")
@@ -78,9 +95,6 @@ class AivenTestCases(unittest.TestCase):
         response = tester.get("a", content_type="html/text")
         self.assertEqual(response.status_code, 404)
         self.assertTrue(b"does not exist" in response.data)
-
-
-# test get clouds withotu comparing blindly json
 
 
 if __name__ == "__main__":
