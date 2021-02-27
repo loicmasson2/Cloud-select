@@ -1,6 +1,13 @@
 FROM node:alpine
-RUN mkdir /frontend
-WORKDIR /frontend
-COPY package.json /frontend/package.json
-COPY package-lock.json /frontend/package-lock.json
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json ./
+
+COPY package-lock.json ./
+
 RUN npm install
+
+COPY . ./
