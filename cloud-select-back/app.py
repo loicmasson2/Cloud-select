@@ -53,8 +53,8 @@ def aiven_clouds_per_provider(provider_name):
             result.append(p)
 
     if len(result) == 0:
-        response_message = "No cloud instances found for provider %s " % (
-            provider_name
+        response_message = (
+            f"No cloud instances found for provider {provider_name}"
         )
         response = make_response(response_message, 404)
         return response
@@ -71,9 +71,7 @@ def aiven_clouds_per_region(region_name):
             result.append(p)
 
     if len(result) == 0:
-        response_message = "No cloud instances found for region %s " % (
-            provider_name
-        )
+        response_message = f"No cloud instances found for region {region_name}"
         response = make_response(response_message, 404)
         return response
     return jsonify({"clouds": result})
@@ -93,10 +91,7 @@ def aiven_clouds_instances(provider_name, region_name):
             result.append(p)
 
     if len(result) == 0:
-        response_message = "Not found provider %s at the region %s" % (
-            provider_name,
-            region_name,
-        )
+        response_message = f"No provider found for {provider_name} at the region {region_name}"
         response = make_response(response_message, 404)
         return response
     return jsonify({"clouds": result})
@@ -132,7 +127,7 @@ def clear():
 
 @app.route("/<page_name>")
 def other_page(page_name):
-    response_message = "The page named %s does not exist." % page_name
+    response_message = f"The page named {page_name} does not exist."
     response = make_response(response_message, 404)
     return response
 

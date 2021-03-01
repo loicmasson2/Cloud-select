@@ -58,6 +58,7 @@ I used the complementary colors from https://aiven.io/ homepage.
 
 ### Backend
 
+- would add the possibility to return as many as requested for the nearby endpoint
 -
 
 ## Attributions

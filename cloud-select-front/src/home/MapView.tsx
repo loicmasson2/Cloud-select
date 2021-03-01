@@ -32,7 +32,7 @@ function MapView() {
             },
             options,
         );
-    }, [myCoordinates]);
+    }, []);
 
     return (
         <CoordinatesContext.Consumer>

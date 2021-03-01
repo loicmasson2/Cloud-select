@@ -8,8 +8,6 @@ import Container from 'common/components/Container';
 import { CoordinatesContext } from 'common/context/CoordinatesContext';
 import MapView from 'home/MapView';
 
-import './index.css';
-
 const App = () => {
     const [cloudsCoordinates, setCloudsCoordinates] = useState([]);
 
