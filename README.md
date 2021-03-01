@@ -53,13 +53,17 @@ I used the complementary colors from https://aiven.io/ homepage.
 - could be made responsive
 - axios interceptors to change from snake case to camelCase
 - couldn't manage to test moving from one page to another
+- in retrospect I should have done eveyrhing in one page instead of several, much simpler to adapt and add cross filtering
+- the context usage I initially planned to store the coordinates that would be stored on the map. But couldn't make it work so I stored the backend query.
 - add cypress for End to End
 - add react-styleguidist
 
 ### Backend
 
 - would add the possibility to return as many as requested for the nearby endpoint
--
+- caching is using flask caching which is caching everything and seem like brute forcing
+- I could have split the logic in different files and have the endpoint just do the validation and return the result of a function
+- more types
 
 ## Attributions
 
